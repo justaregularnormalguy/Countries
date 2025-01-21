@@ -40,9 +40,14 @@ public class Main
     // Write a for loop that goes through the countryArray.
     // for(int i ....) {
     // Do the following inside the loop
+    for(int i = 0; i < countryArray.length; i++){
       String input = scan.nextLine();
       String[] data = input.split(",");
       System.out.println("Read in " + data[0]);
+      
+       Country country = new Country(data[0], data[1], data [2], data [3]);
+       countryArray[i] = country;
+      }
       // inside the loop, create a new Country using your constructor with 4 arguments and pass in data[0], data[1], data[2], data[3] as arguments.
      // inside the loop, set countryArray[i] to the created Country object
      
@@ -53,9 +58,9 @@ public class Main
   */
   public void showCountry() {
     // Get the country at index from countryArray
-    
+    Country currCountry = countryArray[index];
     // Use its get method to get the its image file name and save it into imagefile variable below instead of worldmap.jpg.
-    String imagefile = "worldmap.jpg";
+    String imagefile = currCountry.getImage();
     // Use the following code to create an new Image Icon and put it into the GUI
     img = new ImageIcon("/workspaces/Countries/workspace/"+imagefile);
     imageLabel.setIcon(img);
@@ -64,13 +69,21 @@ public class Main
   /* nextButton should increment index. If the index is greater than 9, reset it back to 0. Clear the outputLabel to empty string using setText, and call showCountry();*/
   public void nextButtonClick()
   {
-    
+    index++;
+    if (index > 9){
+      index = 0;
+    }
+    outputLabel.setText("");
+    showCountry();
+
+
   }
   
   /* reviewButton should get the country at index from the countryArray, call its toString() method and save the result, print it out with System.out.println and as an argument to outputLabel.setText( text to print out ); */
   public void reviewButtonClick()
   {
-     
+    Country currCountry = countryArray[index];
+    outputLabel.setText(currCountry.toString());
   }
 
   /* quizButton should clear the outputLabel (outputLabel.setText to empty string), get the country at index from countryArray, print out a question about it like What country is this? and/or What's this country's capital?. Get the user's answer using scan.nextLine() and check if it is equal to the country's data using its get methods and print out correct or incorrect.
@@ -78,10 +91,19 @@ public class Main
   public void quizButtonClick()
   {
     Scanner scan = new Scanner(System.in); 
+    outputLabel.setText("");  
+    Country currCountry = countryArray[index];
+    System.out.println("What's this country?");
+    String input = scan.nextLine();
+    if(currCountry.getCountryName().equals(input)){
+      System.out.println("Correct!");
+    }
+    else {
+      System.out.println("Incorrect");
+    }
+    }
     
-    
-    
-  }
+  
 
 
 
